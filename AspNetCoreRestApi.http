@@ -1,0 +1,6 @@
+@AspNetCoreRestApi_HostAddress = http://localhost:5294
+
+GET {{AspNetCoreRestApi_HostAddress}}/products/
+Accept: application/json
+
+###
