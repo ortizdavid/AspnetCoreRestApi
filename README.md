@@ -5,10 +5,10 @@
 - Product Management
 
 ## Features
-- CRUD Operations
-- Upload Image
-- Export PDF, XLSX and CSV
-- Authentication
+- [x] CRUD Operations
+- [ ] Upload Image
+- [x] Export PDF, XLSX and CSV
+- [ ] Authentication
 
 ## Tools
 - C#
