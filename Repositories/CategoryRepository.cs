@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreRestApi.Repositories
 {
-    public class CategoryRepository 
+    public class CategoryRepository : IRepository<Category>
     {
         private readonly AppDbContext _context;
 
@@ -46,11 +46,11 @@ namespace AspNetCoreRestApi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsAsync(string? categoryName)
+        public async Task<bool> ExistsAsync(string? predicate)
         {
-            if (categoryName == null)
+            if (predicate == null)
                 return false;
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryName == categoryName);
+            var category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryName == predicate);
             return category != null;
         }
 

@@ -16,12 +16,14 @@ namespace AspNetCoreRestApi.Controllers
     public class ProductReportsController : ControllerBase
     {
 
-        private readonly ProductRepository _repository;
+        private readonly ProductReportRepository _repository;
+        private readonly ProductRepository _productRepository;
         private readonly ILogger<ProductsController> _logger;
 
-        public ProductReportsController(ProductRepository repository, ILogger<ProductsController> logger)
+        public ProductReportsController(ProductReportRepository repository, ProductRepository productRepository, ILogger<ProductsController> logger)
         {
             _repository = repository;
+            _productRepository = productRepository;
             _logger = logger;
         }
         
@@ -31,7 +33,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _repository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 
                 if (products.Count == 0)
@@ -64,7 +66,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _repository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 
                 if (products.Count == 0)
@@ -90,7 +92,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _repository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 
                 if (products.Count == 0)

@@ -7,6 +7,7 @@
 ## Features
 - [x] CRUD Operations
 - [ ] Upload Image
+- [ ] Import CSV
 - [x] Export PDF, XLSX and CSV
 - [ ] Authentication
 

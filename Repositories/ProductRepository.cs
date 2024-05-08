@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreRestApi.Repositories
 {
-    public class ProductRepository 
+    public class ProductRepository : IRepository<Product>
     {
         private readonly AppDbContext _context;
 
@@ -40,9 +40,9 @@ namespace AspNetCoreRestApi.Repositories
             return await _context.Products.FindAsync(id);
         }
         
-        public async Task<Product?> GetByCodeAsync(string? code)
+        public async Task<Product?> GetByCodeAsync(string? predicate)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Code == code);    
+            return await _context.Products.FirstOrDefaultAsync(p => p.Code == predicate);    
         }
 
         public async Task<ProductData?> GetDataByIdAsync(int id)
@@ -61,27 +61,12 @@ namespace AspNetCoreRestApi.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsAsync(string? code)
+        public async Task<bool> ExistsAsync(string? predicate)
         {
-            if (code == null)
+            if (predicate == null)
                 return false;
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Code == code);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Code == predicate);
             return product != null;
-        }
-
-        public IEnumerable<ProductReport> GetFieldsForReport(IEnumerable<ProductData> products)
-        {
-            return products.Select(p => new ProductReport
-            {
-               ProductId = p.ProductId,
-                ProductName = p.ProductName,
-                Code = p.Code,
-                UnitPrice = p.UnitPrice,
-                CategoryName = p.CategoryName,
-                Description = p.Description,
-                CreatedAt = p.CreatedAt,
-                UpdatedAt = p.UpdatedAt
-            });
         }
 
     }
