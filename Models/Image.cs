@@ -29,6 +29,10 @@ namespace AspNetCoreRestApi.Models
         [Column("right_image")]  
         public string? RightImage { get; set; }
 
+        [StringLength(50)]
+        [Column("file_path")]  
+        public string? FilePath { get; set; }
+
         [Column("created_at")]  
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 

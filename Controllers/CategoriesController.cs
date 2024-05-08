@@ -23,7 +23,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _repository.GetAllAsync();
-            if (categories.Count == 0)
+            if (!categories.Any())
             {
                 return NotFound();
             }

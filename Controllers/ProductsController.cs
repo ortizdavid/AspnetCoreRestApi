@@ -26,7 +26,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetAllProducts()
         {
             var products = await _repository.GetAllDataAsync();
-            if (products.Count == 0)
+            if (!products.Any())
             {
                 return NotFound();
             }
@@ -130,7 +130,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPost("{id}/images")]
-        public async Task<IActionResult> AddProductImages(int id, [FromBody] Image image)
+        public async Task<IActionResult> AddProductImages(int id, [FromBody] Image image, List<IFormFile> files)
         {
             var product = await _repository.GetByIdAsync(id);
             if (product == null)
@@ -150,7 +150,7 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
+        [HttpGet("{id}/images")]
         public async Task<IActionResult> GetProductImages(int id)
         {
             var product = await _repository.GetByIdAsync(id);
@@ -160,7 +160,10 @@ namespace AspNetCoreRestApi.Controllers
             }
             else 
             {
-
+                var images = await _imageRepository.GetAllAsync(product.ProductId);
+                if (!images.Any())
+                    return NotFound();
+                return Ok(images);
             }
         }
 
