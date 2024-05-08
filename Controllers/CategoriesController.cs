@@ -44,7 +44,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategory([FromBody]Category category)
+        public async Task<IActionResult> CreateCategory([FromBody] Category category)
         {
             if (category == null)
             {
@@ -54,10 +54,10 @@ namespace AspNetCoreRestApi.Controllers
             {
                 if (await _repository.ExistsAsync(category.CategoryName))
                 {
-                    return BadRequest($"Category '{category.CategoryName}' already exists");
+                    return BadRequest($"Category '{category.CategoryName}' already exists.");
                 }
                 await _repository.CreateAsync(category);
-                _logger.LogInformation($"Category '{category.CategoryName}' created");
+                _logger.LogInformation($"Category '{category.CategoryName}' created.");
                 return StatusCode(201, category);
             }
             catch (Exception ex)
@@ -69,7 +69,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCategory(int id, [FromBody]Category updatedCategory)
+        public async Task<IActionResult> UpdateCategory(int id, [FromBody] Category updatedCategory)
         {
             var category = await _repository.GetByIdAsync(id);
             if (category == null)
@@ -83,7 +83,7 @@ namespace AspNetCoreRestApi.Controllers
 
                 category.UpdatedAt = DateTime.Now;
                 await _repository.UpdateAsync(category);
-                _logger.LogInformation($"Category '{updatedCategory.CategoryName}' updated ");
+                _logger.LogInformation($"Category '{updatedCategory.CategoryName}' updated.");
                 return Ok(category);
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace AspNetCoreRestApi.Controllers
             try
             {
                 await _repository.DeleteAsync(category);
-                _logger.LogInformation($"Category '{category.CategoryName}' deleted ");
+                _logger.LogInformation($"Category '{category.CategoryName}' deleted.");
                 return NoContent();
             }
             catch (Exception ex)

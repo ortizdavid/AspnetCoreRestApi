@@ -4,7 +4,6 @@ using CsvHelper;
 using System.Globalization;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
-
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -55,7 +54,7 @@ namespace AspNetCoreRestApi.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error exporting products to CSV");
+                _logger.LogError(ex, "Error exporting products to CSV.");
                 return StatusCode(500, "An error occurred while exporting products to CSV");
             }
         }
@@ -76,12 +75,12 @@ namespace AspNetCoreRestApi.Controllers
 
                 var fileName = "products.pdf";
                
-                _logger.LogInformation($"Export all products to PDF: {fileName}");
+                _logger.LogInformation($"Export all products to PDF: {fileName}.");
                 return Ok(fileName);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error exporting products to pdf");
+                _logger.LogError(ex, "Error exporting products to pdf.");
                 return StatusCode(500, "An error occurred while exporting products to pdf");
             }
         }
@@ -135,13 +134,13 @@ namespace AspNetCoreRestApi.Controllers
                     worksheet.Cells.AutoFitColumns();
 
                     var fileBytes = excelPackage.GetAsByteArray();
-                    _logger.LogInformation($"Export all products to xlsx: {fileName}");
+                    _logger.LogInformation($"Export all products to xlsx: {fileName}.");
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error exporting products to xlsx");
+                _logger.LogError(ex, "Error exporting products to xlsx.");
                 return StatusCode(500, "An error occurred while exporting products to xlsx");
             }
         }

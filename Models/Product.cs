@@ -27,10 +27,6 @@ namespace AspNetCoreRestApi.Models
         [Column("description")]  
         public string? Description { get; set; }
         
-        [StringLength(50)]
-        [Column("image")]  
-        public string? Image { get; set; }
-        
         [Column("category_id")]  
         public int CategoryId { get; set; }
         

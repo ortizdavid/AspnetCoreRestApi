@@ -19,9 +19,6 @@ namespace AspNetCoreRestApi.Models
         [Column("unit_price")]
         public double UnitPrice { get; set; }
 
-        [Column("image")]
-        public string? Image { get; set; }
-
         [Column("description")]
         public string? Description { get; set; }
 

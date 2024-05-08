@@ -11,11 +11,13 @@ namespace AspNetCoreRestApi.Controllers
     public class ProductsController : ControllerBase
     {
         private readonly ProductRepository _repository;
+        private readonly ImageRepository _imageRepository;
         private readonly ILogger<ProductsController> _logger;
 
-        public ProductsController(ProductRepository repository, ILogger<ProductsController> logger)
+        public ProductsController(ProductRepository repository, ImageRepository imageRepository, ILogger<ProductsController> logger)
         {
             _repository = repository;
+            _imageRepository = imageRepository;
             _logger = logger;
         }
 
@@ -33,7 +35,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateProduct([FromBody]Product product)
+        public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
             if (product == null)
             {
@@ -43,10 +45,10 @@ namespace AspNetCoreRestApi.Controllers
             {
                 if (await _repository.ExistsAsync(product.Code))
                 {
-                    return BadRequest($"Product code: '{product.Code}' already exist");
+                    return BadRequest($"Product code: '{product.Code}' already exist.");
                 }
                 await _repository.CreateAsync(product);
-                _logger.LogInformation($"Product '{product.ProductName}' created");
+                _logger.LogInformation($"Product '{product.ProductName}' created.");
                 return StatusCode(201, product);
             }
             catch (Exception ex)
@@ -73,7 +75,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProduct(int id, [FromBody]Product updatedProduct)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] Product updatedProduct)
         {
             var product = await _repository.GetByIdAsync(id);
             if (product == null)
@@ -94,7 +96,7 @@ namespace AspNetCoreRestApi.Controllers
                 product.Description = updatedProduct.Description;
                 product.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(product);
-                _logger.LogInformation($"Product '{product.ProductName}' updated");
+                _logger.LogInformation($"Product '{product.ProductName}' updated.");
                 return Ok(product);
             }
             catch (Exception ex)
@@ -116,13 +118,49 @@ namespace AspNetCoreRestApi.Controllers
             try
             {
                 await _repository.DeleteAsync(product);
-                _logger.LogInformation($"Product '{product.ProductName}' deleteted ");
+                _logger.LogInformation($"Product '{product.ProductName}' deleteted.");
                 return NoContent();
             }
             catch (Exception ex)
             {
                 _logger.LogInformation(ex.Message);
                 return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpPost("{id}/images")]
+        public async Task<IActionResult> AddProductImages(int id, [FromBody] Image image)
+        {
+            var product = await _repository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            try
+            {
+                image.ProductId = product.ProductId;
+                await _imageRepository.CreateAsync(image);
+                _logger.LogInformation($"Images for Product '{product.ProductName}' uploaded.");
+                return StatusCode(201, image);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        public async Task<IActionResult> GetProductImages(int id)
+        {
+            var product = await _repository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            else 
+            {
+
             }
         }
 

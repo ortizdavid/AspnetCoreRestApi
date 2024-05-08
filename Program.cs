@@ -1,6 +1,6 @@
 
+using AspNetCoreRestApi.Extensions;
 using AspNetCoreRestApi.Models;
-using AspNetCoreRestApi.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 internal class Program
@@ -10,19 +10,17 @@ internal class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
-        // Connection String
+        // Connection String / DbContext
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         builder.Services.AddDbContext<AppDbContext>(
             options => options.UseNpgsql(connectionString)
         );
-
+        // Controllers
         builder.Services.AddControllers();
+        // Logging
         builder.Logging.AddConsole();
-
         //Add repositories -------------------------
-        builder.Services.AddScoped<CategoryRepository>();
-        builder.Services.AddScoped<ProductRepository>();
-        builder.Services.AddScoped<ProductReportRepository>();
+        builder.Services.AddRepositories();
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
