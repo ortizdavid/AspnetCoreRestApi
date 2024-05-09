@@ -15,14 +15,45 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task CreateAsync(Category entity)
         {
-            await _context.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task CreateBatchAsync(List<Category> entities)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _context.AddRangeAsync(entities);
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         public async Task DeleteAsync(Category entity)
         {
-            _context.Categories.Remove(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Categories.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<List<Category>> GetAllAsync()
@@ -42,8 +73,15 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task UpdateAsync(Category entity)
         {
-            _context.Categories.Update(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Categories.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> ExistsAsync(string? predicate)

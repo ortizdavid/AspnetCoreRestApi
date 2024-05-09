@@ -15,14 +15,46 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task CreateAsync(Product entity)
         {
-            await _context.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.AddAsync(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task CreateBatchAsync(List<Product> entities)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _context.AddRangeAsync(entities);
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception)
+                {
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
 
         public async Task DeleteAsync(Product entity)
         {
-            _context.Products.Remove(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Products.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<List<Product>> GetAllAsync()
@@ -57,8 +89,15 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task UpdateAsync(Product entity)
         {
-            _context.Products.Update(entity);
-            await _context.SaveChangesAsync();
+            try
+            {
+                _context.Products.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> ExistsAsync(string? predicate)

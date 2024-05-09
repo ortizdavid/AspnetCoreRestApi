@@ -9,6 +9,7 @@ namespace AspNetCoreRestApi.Repositories
     public interface IRepository<T> where T : class
     {
         Task CreateAsync(T entity);
+        Task CreateBatchAsync(List<T> entities);
         Task DeleteAsync(T entity);
         Task<List<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
