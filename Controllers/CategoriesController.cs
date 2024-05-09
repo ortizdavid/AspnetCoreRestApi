@@ -2,6 +2,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
+using Microsoft.AspNetCore.Http.Metadata;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -111,6 +112,59 @@ namespace AspNetCoreRestApi.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+
+        [HttpPost("import-csv")]
+        public async Task<IActionResult> ImportCategorys(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file selected.");
+            }
+            if (Path.GetExtension(file.FileName).ToLower() != ".csv")
+            {
+                return BadRequest("Invalid file format. Please upload a CSV file.");
+            }
+            try
+            {
+                var categories = new List<Category>();
+                using (StreamReader reader = new StreamReader(file.OpenReadStream()))
+                {
+                    // Skip the header line
+                    await reader.ReadLineAsync();
+                    string? line;
+                    while ((line = await reader.ReadLineAsync()) != null)
+                    {
+                        var data = line.Split(',');
+                        var categoryName = data[0];
+                        // verify number of fields
+                        if (data.Length != 2)
+                        {
+                            return BadRequest("Invalid CSV format. Each line must contain CategoryName, Description.");
+                        }
+                        //verify if exists
+                        if (await _repository.ExistsAsync(categoryName))
+                        {
+                            return BadRequest($"Category '{categoryName}' already exist");
+                        }
+                        var category = new Category
+                        {
+                            CategoryName = categoryName,
+                            Description =  data[1],
+                        };
+                        categories.Add(category);
+                    }
+                }
+                await _repository.CreateBatchAsync(categories);
+                _logger.LogInformation($"Categories imported by CSV successfully: {categories.Count} lines");
+                return StatusCode(201, $"Categories imported: {categories.Count} lines");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

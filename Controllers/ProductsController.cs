@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Helpers;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
 
 
 namespace AspNetCoreRestApi.Controllers
@@ -16,7 +19,6 @@ namespace AspNetCoreRestApi.Controllers
         private readonly ImageRepository _imageRepository;
         private readonly ILogger<ProductsController> _logger;
         private readonly FileUploader _imageUploader;
-        private readonly FileUploader _csvUploader;
 
         public ProductsController(IConfiguration configuration, ProductRepository repository, ImageRepository imageRepository, ILogger<ProductsController> logger)
         {
@@ -27,7 +29,6 @@ namespace AspNetCoreRestApi.Controllers
 
             var uploadsDirectory = _configuration["UploadsDirectory"];
             _imageUploader = new FileUploader(uploadsDirectory, FileExtensions.Images, 5 * CapacityUnit.MEGA_BYTE);;
-            _csvUploader = new FileUploader(uploadsDirectory, FileExtensions.CsvTxts, 5 * CapacityUnit.MEGA_BYTE);;
         }
 
 
@@ -170,10 +171,11 @@ namespace AspNetCoreRestApi.Controllers
                 };
                 await _imageRepository.CreateAsync(image);
                 _logger.LogInformation($"Images for Product '{product.ProductName}' uploaded.");
-                return Ok(imagesInfo);
+                return Ok($"Images for Product '{product.ProductName}' uploaded.");
             }
             catch (Exception ex)
             {
+                _logger.LogInformation(ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -193,6 +195,66 @@ namespace AspNetCoreRestApi.Controllers
                 if (!images.Any())
                     return NotFound();
                 return Ok(images);
+            }
+        }
+
+
+        [HttpPost("import-csv")]
+        public async Task<IActionResult> ImportProducts(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                return BadRequest("No file selected.");
+            }
+            if (Path.GetExtension(file.FileName).ToLower() != ".csv")
+            {
+                return BadRequest("Invalid file format. Please upload a CSV file.");
+            }
+            try
+            {
+                var products = new List<Product>();
+                using (StreamReader reader = new StreamReader(file.OpenReadStream()))
+                {
+                    // Skip the header line
+                    await reader.ReadLineAsync();
+                    string? line;
+                    while ((line = await reader.ReadLineAsync()) != null)
+                    {
+                        var data = line.Split(',');
+                        var productCode = data[1];
+                        // verify number of fields
+                        if (data.Length != 4)
+                        {
+                            return BadRequest("Invalid CSV format. Each line must contain ProductName, Code, UnitPrice, CategoryId.");
+                        }
+                        // verify csv format
+                        if (!float.TryParse(data[2], out float unitPrice) || !int.TryParse(data[3], out int categoryId))
+                        {
+                            return BadRequest("Invalid CSV format. UnitPrice and CategoryId must be numeric.");
+                        }
+                        //verify if exists
+                        if (await _repository.ExistsAsync(productCode))
+                        {
+                            return BadRequest($"Product code '{productCode}' already exist");
+                        }
+                        var product = new Product
+                        {
+                            ProductName = data[0],
+                            Code = productCode,
+                            UnitPrice = float.Parse(data[2]),
+                            CategoryId = int.Parse(data[3]) 
+                        };
+                        products.Add(product);
+                    }
+                }
+                await _repository.CreateBatchAsync(products);
+                _logger.LogInformation($"Products imported by CSV successfully: {products.Count} lines");
+                return StatusCode(201, $"Products imported: {products.Count} lines");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogInformation(ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 

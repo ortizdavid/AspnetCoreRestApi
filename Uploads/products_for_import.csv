@@ -1,0 +1,20 @@
+ProductName,Code,UnitPrice,CategoryId
+Mouse,P092,19.99,1,1
+Keyboard,K342,29.99,2,2
+Monitor,M556,149.99,3,3
+Laptop,L783,799.99,1
+Headphones,H456,49.99,2
+Speakers,S789,79.99,3
+Camera,C234,299.99,1
+Smartphone,S901,699.99,2
+Tablet,T567,399.99,3
+Printer,P333,129.99,1
+External Hard Drive,E777,89.99,2
+USB Flash Drive,U444,14.99,3
+Ethernet Cable,E999,9.99,1
+Wireless Router,W222,49.99,2
+Gaming Console,G888,399.99,3
+VR Headset,V111,299.99,1
+Smartwatch,S222,199.99,2
+Fitness Tracker,F333,99.99,3
+Digital Camera,D444,199.99,1
