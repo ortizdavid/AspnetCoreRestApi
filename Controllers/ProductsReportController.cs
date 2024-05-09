@@ -74,7 +74,6 @@ namespace AspNetCoreRestApi.Controllers
                 }
 
                 var fileName = "products.pdf";
-               
                 _logger.LogInformation($"Export all products to PDF: {fileName}.");
                 return Ok(fileName);
             }
@@ -122,8 +121,7 @@ namespace AspNetCoreRestApi.Controllers
                         worksheet.Cells[row, 1].Value = product.ProductName;
                         worksheet.Cells[row, 2].Value = product.Code;
                         worksheet.Cells[row, 3].Value = product.UnitPrice;
-                        // Format format
-                        worksheet.Cells[row, 3].Style.Numberformat.Format = "#,##0.00";
+                        worksheet.Cells[row, 3].Style.Numberformat.Format = "#,##0.00"; // Format currency
                         worksheet.Cells[row, 4].Value = product.CategoryName;
                         worksheet.Cells[row, 5].Value = product.Description;
                         worksheet.Cells[row, 6].Value = product.CreatedAt.ToString();

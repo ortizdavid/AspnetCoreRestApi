@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
+using AspNetCoreRestApi.Helpers;
 
 
 namespace AspNetCoreRestApi.Controllers
@@ -10,15 +11,23 @@ namespace AspNetCoreRestApi.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly ProductRepository _repository;
         private readonly ImageRepository _imageRepository;
         private readonly ILogger<ProductsController> _logger;
+        private readonly FileUploader _imageUploader;
+        private readonly FileUploader _csvUploader;
 
-        public ProductsController(ProductRepository repository, ImageRepository imageRepository, ILogger<ProductsController> logger)
+        public ProductsController(IConfiguration configuration, ProductRepository repository, ImageRepository imageRepository, ILogger<ProductsController> logger)
         {
+            _configuration = configuration;
             _repository = repository;
             _imageRepository = imageRepository;
             _logger = logger;
+
+            var uploadsDirectory = _configuration["UploadsDirectory"];
+            _imageUploader = new FileUploader(uploadsDirectory, FileExtensions.Images, 5 * CapacityUnit.MEGA_BYTE);;
+            _csvUploader = new FileUploader(uploadsDirectory, FileExtensions.CsvTxts, 5 * CapacityUnit.MEGA_BYTE);;
         }
 
 
@@ -137,12 +146,31 @@ namespace AspNetCoreRestApi.Controllers
             {
                 return NotFound();
             }
+            if (files == null || files.Count == 0)
+            {
+                return BadRequest("No files selected.");
+            }
+            if (files.Count > 4) 
+            {
+                return BadRequest("Only 4 images are allowed: front, back, left and right.");
+            }
             try
             {
-                //image.ProductId = product.ProductId;
-                //await _imageRepository.CreateAsync(image);
+                var imagesInfo = await _imageUploader.UploadMultipleFiles(HttpContext, "files");
+                var imagesName = imagesInfo.Select(item => item.FinalName).ToList();
+
+                var image = new Image
+                {
+                    ProductId = product.ProductId,
+                    BackImage = imagesName.ElementAtOrDefault(0),
+                    FrontImage = imagesName.ElementAtOrDefault(1),
+                    LeftImage = imagesName.ElementAtOrDefault(2),
+                    RightImage = imagesName.ElementAtOrDefault(3),
+                    UploadDir = _configuration["UploadsDirectory"]
+                };
+                await _imageRepository.CreateAsync(image);
                 _logger.LogInformation($"Images for Product '{product.ProductName}' uploaded.");
-                return StatusCode(201, product);
+                return Ok(imagesInfo);
             }
             catch (Exception ex)
             {
@@ -150,53 +178,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-        /*
-        [HttpPost("{id}/images")]
-        public async Task<IActionResult> AddProductImages(int id, List<IFormFile> files)
-        {
-            var product = await _repository.GetByIdAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            try
-            {
-                var imagePaths = new List<string>();
-                
-                foreach (var file in files)
-                {
-                    // Upload each image file and get the file path
-                    var filePath = await UploadImageAsync(file);
-                    
-                    // Add the file path to the list
-                    imagePaths.Add(filePath);
-                }
-
-                // Save the image paths to the database
-                foreach (var imagePath in imagePaths)
-                {
-                    var image = new Image
-                    {
-                        ProductId = product.ProductId,
-                        FilePath = imagePath,
-                        CreatedAt = DateTime.UtcNow,
-                        UpdatedAt = DateTime.UtcNow
-                    };
-                    
-                    await _imageRepository.CreateAsync(image);
-                }
-
-                _logger.LogInformation($"Images for Product '{product.ProductName}' uploaded.");
-                return StatusCode(201, "Images uploaded successfully");
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Error uploading images: {ex.Message}");
-                return StatusCode(500, "Internal server error");
-            }
-        }
-        */
 
         [HttpGet("{id}/images")]
         public async Task<IActionResult> GetProductImages(int id)

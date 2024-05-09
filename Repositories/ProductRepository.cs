@@ -17,7 +17,7 @@ namespace AspNetCoreRestApi.Repositories
         {
             try
             {
-                await _context.AddAsync(entity);
+                await _context.Products.AddAsync(entity);
                 await _context.SaveChangesAsync();
             }
             catch (Exception)
@@ -32,7 +32,7 @@ namespace AspNetCoreRestApi.Repositories
             {
                 try
                 {
-                    await _context.AddRangeAsync(entities);
+                    await _context.Products.AddRangeAsync(entities);
                     await _context.SaveChangesAsync();
                     await transaction.CommitAsync();
                 }
@@ -51,7 +51,7 @@ namespace AspNetCoreRestApi.Repositories
                 _context.Products.Remove(entity);
                 await _context.SaveChangesAsync();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw;
             }

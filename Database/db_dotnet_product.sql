@@ -34,18 +34,7 @@ CREATE TABLE images (
     back_image VARCHAR(50),
     left_image VARCHAR(50),
     right_image VARCHAR(50),
-    file_path VARCHAR(50),
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_products FOREIGN KEY(product_id) REFERENCES products(product_id)
-);
-
-DROP TABLE IF EXISTS images;
-CREATE TABLE images (
-    image_id SERIAL PRIMARY KEY,
-    product_id INT NOT NULL,
-    image_name VARCHAR(50),
-    image_url VARCHAR(50),
+    upload_dir VARCHAR(50),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT fk_products FOREIGN KEY(product_id) REFERENCES products(product_id)

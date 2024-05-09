@@ -15,8 +15,33 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task CreateAsync(Image image)
         {
-            await _context.Images.AddAsync(image);
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.Images.AddAsync(image);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {   
+                throw;
+            }
+        }
+
+        public async Task CreateBatchAsync(Image image)
+        {
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    await _context.Images.AddAsync(image);
+                    await _context.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception)
+                {   
+                    await transaction.RollbackAsync();
+                    throw;
+                }
+            }
         }
 
         public async Task<List<Image>> GetAllAsync(int productId)
@@ -29,11 +54,18 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task DeleteAsync(int productId)
         {
-            var images = await _context.Images
+            try
+            {
+                var images = await _context.Images
                             .Where(img => img.ProductId == productId)
                             .ToListAsync();
-            _context.Images.RemoveRange(images);
-            await _context.SaveChangesAsync();
+                _context.Images.RemoveRange(images);
+                await _context.SaveChangesAsync(); 
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
     }
