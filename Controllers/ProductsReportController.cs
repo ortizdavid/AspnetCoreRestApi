@@ -39,7 +39,6 @@ namespace AspNetCoreRestApi.Controllers
                 {
                     return NotFound();
                 }
-
                 // Generate CSV content
                 var csvContent = new StringBuilder();
                 using (var csvWriter = new CsvWriter(new StringWriter(csvContent), CultureInfo.InvariantCulture))

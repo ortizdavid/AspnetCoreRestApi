@@ -43,6 +43,19 @@ namespace AspNetCoreRestApi.Repositories
             }
         }
 
+        public async Task UpdateAsync(Category entity)
+        {
+            try
+            {
+                _context.Categories.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
+
         public async Task DeleteAsync(Category entity)
         {
             try
@@ -68,28 +81,25 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task<Category?> GetByUniqueIdAsync(Guid uniqueId)
         {
-            return await _context.Categories.FirstOrDefaultAsync(c => c.UniqueId == uniqueId);
-        }
-
-        public async Task UpdateAsync(Category entity)
-        {
-            try
-            {
-                _context.Categories.Update(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            return await _context.Categories
+                .FirstOrDefaultAsync(c => c.UniqueId == uniqueId);
         }
 
         public async Task<bool> ExistsAsync(string? predicate)
         {
             if (predicate == null)
+            {
                 return false;
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.CategoryName == predicate);
+            } 
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.CategoryName == predicate);
             return category != null;
+        }
+
+        public async Task<Category?> GetByNameAsync(string? name)
+        {
+            return await _context.Categories
+                .FirstOrDefaultAsync(c => c.CategoryName == name);
         }
 
     }

@@ -79,9 +79,13 @@ namespace AspNetCoreRestApi.Controllers
             }
             try
             {
+                var existing = await _repository.GetByNameAsync(category.CategoryName);
+                if (existing != null && existing.CategoryId != id)
+                {
+                    return Conflict($"Category '{category.CategoryName}' already exists.");
+                }
                 category.CategoryName = updatedCategory.CategoryName;
                 category.Description = updatedCategory.Description;
-
                 category.UpdatedAt = DateTime.Now;
                 await _repository.UpdateAsync(category);
                 _logger.LogInformation($"Category '{updatedCategory.CategoryName}' updated.");
@@ -145,7 +149,6 @@ namespace AspNetCoreRestApi.Controllers
                         {
                             return BadRequest("Invalid CSV format. Each line must contain CategoryName, Description.");
                         }
-                        //verify if exists
                         if (await _repository.ExistsAsync(categoryName))
                         {
                             return BadRequest($"Category '{categoryName}' already exist");

@@ -9,7 +9,7 @@ namespace AspNetCoreRestApi.Repositories
         {
             return products.Select(p => new ProductReport
             {
-               ProductId = p.ProductId,
+                ProductId = p.ProductId,
                 ProductName = p.ProductName,
                 Code = p.Code,
                 UnitPrice = p.UnitPrice,

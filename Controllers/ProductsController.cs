@@ -97,13 +97,13 @@ namespace AspNetCoreRestApi.Controllers
                 var existing = await _repository.GetByCodeAsync(product.Code);
                 if (existing != null && existing.ProductId != id)
                 {
-                    _logger.LogError($"Product {product.Code} already exists.");
                     return Conflict($"Product code '{updatedProduct.Code}' is already in use by another product.");
                 }
-
                 product.ProductName = updatedProduct.ProductName;
                 product.UnitPrice = updatedProduct.UnitPrice;
                 product.Description = updatedProduct.Description;
+                product.CategoryId = updatedProduct.CategoryId;
+                product.SupplierId = updatedProduct.SupplierId;
                 product.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(product);
                 _logger.LogInformation($"Product '{product.ProductName}' updated.");
@@ -223,14 +223,14 @@ namespace AspNetCoreRestApi.Controllers
                         var data = line.Split(',');
                         var productCode = data[1];
                         // verify number of fields
-                        if (data.Length != 4)
+                        if (data.Length != 5)
                         {
-                            return BadRequest("Invalid CSV format. Each line must contain ProductName, Code, UnitPrice, CategoryId.");
+                            return BadRequest("Invalid CSV format. Each line must contain ProductName,Code,UnitPrice,CategoryId,SupplierId.");
                         }
                         // verify csv format
-                        if (!float.TryParse(data[2], out float unitPrice) || !int.TryParse(data[3], out int categoryId))
+                        if (!float.TryParse(data[2], out float unitPrice) || !int.TryParse(data[3], out int categoryId) || !int.TryParse(data[4], out int supplierId))
                         {
-                            return BadRequest("Invalid CSV format. UnitPrice and CategoryId must be numeric.");
+                            return BadRequest("Invalid CSV format. UnitPrice and CategoryId and SupplierId must be numeric.");
                         }
                         //verify if exists
                         if (await _repository.ExistsAsync(productCode))
@@ -242,7 +242,8 @@ namespace AspNetCoreRestApi.Controllers
                             ProductName = data[0],
                             Code = productCode,
                             UnitPrice = float.Parse(data[2]),
-                            CategoryId = int.Parse(data[3]) 
+                            CategoryId = int.Parse(data[3]),
+                            SupplierId = int.Parse(data[4]) 
                         };
                         products.Add(product);
                     }

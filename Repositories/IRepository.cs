@@ -10,11 +10,11 @@ namespace AspNetCoreRestApi.Repositories
     {
         Task CreateAsync(T entity);
         Task CreateBatchAsync(List<T> entities);
+        Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task<List<T>> GetAllAsync();
         Task<T?> GetByIdAsync(int id);
         Task<T?> GetByUniqueIdAsync(Guid uniqueId);
-        Task UpdateAsync(T entity);
-        Task<bool> ExistsAsync(string predicate);
+        Task<bool> ExistsAsync(string? predicate);
     }
 }

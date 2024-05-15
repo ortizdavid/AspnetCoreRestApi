@@ -43,6 +43,19 @@ namespace AspNetCoreRestApi.Repositories
                 }
             }
         }
+        
+        public async Task UpdateAsync(Product entity)
+        {
+            try
+            {
+                _context.Products.Update(entity);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
 
         public async Task DeleteAsync(Product entity)
         {
@@ -72,40 +85,40 @@ namespace AspNetCoreRestApi.Repositories
             return await _context.Products.FindAsync(id);
         }
         
-        public async Task<Product?> GetByCodeAsync(string? predicate)
+        public async Task<Product?> GetByCodeAsync(string? code)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.Code == predicate);    
+            return await _context.Products
+                .FirstOrDefaultAsync(p => p.Code == code);    
         }
 
         public async Task<ProductData?> GetDataByIdAsync(int id)
         {
-            return await _context.ProductData.FirstOrDefaultAsync(p => p.ProductId == id);
+            return await _context.ProductData
+                .FirstOrDefaultAsync(p => p.ProductId == id);
         }
 
         public async Task<Product?> GetByUniqueIdAsync(Guid uniqueId)
         {
-            return await _context.Products.FirstOrDefaultAsync(p => p.UniqueId == uniqueId);
-        }
-
-        public async Task UpdateAsync(Product entity)
-        {
-            try
-            {
-                _context.Products.Update(entity);
-                await _context.SaveChangesAsync();
-            }
-            catch (System.Exception)
-            {
-                throw;
-            }
+            return await _context.Products
+                .FirstOrDefaultAsync(p => p.UniqueId == uniqueId);
         }
 
         public async Task<bool> ExistsAsync(string? predicate)
         {
             if (predicate == null)
+            {
                 return false;
-            var product = await _context.Products.FirstOrDefaultAsync(p => p.Code == predicate);
+            }
+            var product = await _context.Products
+                .FirstOrDefaultAsync(p => p.Code == predicate);
             return product != null;
+        }
+
+        public async Task<List<Product>> GetAllBySupplierAsync(int id)
+        {
+            return await _context.Products
+                .Where(s => s.SupplierId == id)
+                .ToListAsync();
         }
 
     }

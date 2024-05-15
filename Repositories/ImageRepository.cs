@@ -44,21 +44,13 @@ namespace AspNetCoreRestApi.Repositories
             }
         }
 
-        public async Task<List<Image>> GetAllAsync(int productId)
-        {
-            var images = await _context.Images
-                            .Where(img => img.ProductId == productId)
-                            .ToListAsync();
-            return images;
-        }
-
         public async Task DeleteAsync(int productId)
         {
             try
             {
                 var images = await _context.Images
-                            .Where(img => img.ProductId == productId)
-                            .ToListAsync();
+                        .Where(img => img.ProductId == productId)
+                        .ToListAsync();
                 _context.Images.RemoveRange(images);
                 await _context.SaveChangesAsync(); 
             }
@@ -66,6 +58,14 @@ namespace AspNetCoreRestApi.Repositories
             {
                 throw;
             }
+        }
+
+        public async Task<List<Image>> GetAllAsync(int productId)
+        {
+            var images = await _context.Images
+                    .Where(img => img.ProductId == productId)
+                    .ToListAsync();
+            return images;
         }
 
     }

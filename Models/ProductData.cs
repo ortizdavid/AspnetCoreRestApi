@@ -33,5 +33,11 @@ namespace AspNetCoreRestApi.Models
 
         [Column("category_name")]
         public string? CategoryName { get; set; }
+
+        [Column("supplier_id")]
+        public int SupplierId { get; set; }
+
+        [Column("supplier_name")]
+        public string? SupplierName { get; set; }
     }
 }

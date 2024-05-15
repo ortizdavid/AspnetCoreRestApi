@@ -29,6 +29,9 @@ namespace AspNetCoreRestApi.Models
         
         [Column("category_id")]  
         public int CategoryId { get; set; }
+
+        [Column("supplier_id")]  
+        public int SupplierId { get; set; }
         
         [Column("unique_id")]  
         public Guid UniqueId { get; set; } = Encryption.GenerateUUID();
