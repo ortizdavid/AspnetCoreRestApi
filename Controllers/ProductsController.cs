@@ -6,6 +6,7 @@ using AspNetCoreRestApi.Helpers;
 using CsvHelper;
 using System.Globalization;
 using CsvHelper.Configuration;
+using System.Xml.Serialization;
 
 
 namespace AspNetCoreRestApi.Controllers
@@ -257,6 +258,38 @@ namespace AspNetCoreRestApi.Controllers
                 _logger.LogInformation(ex.Message);
                 return StatusCode(500, ex.Message);
             }
+        }
+
+
+        [HttpGet("xml")]
+        public async Task<IActionResult> GetAllProductsXml()
+        {
+           
+            var products = await _repository.GetAllDataAsync();
+            if (products == null || !products.Any())
+            {
+                return NotFound();
+            }
+            var xmlSerializer = new XmlSerializer(typeof(List<ProductData>));
+            var xmlContent = new StringWriter();
+            xmlSerializer.Serialize(xmlContent, products);
+            return Content(xmlContent.ToString(), "application/xml");
+        }
+
+
+        [HttpGet("{id}/xml")]
+        public async Task<IActionResult> GetProductXml(int id)
+        {
+           
+            var product = await _repository.GetByIdAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            var xmlSerializer = new XmlSerializer(typeof(Product));
+            var xmlContent = new StringWriter();
+            xmlSerializer.Serialize(xmlContent, product);
+            return Content(xmlContent.ToString(), "application/xml");
         }
 
     }
