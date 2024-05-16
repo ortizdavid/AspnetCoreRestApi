@@ -14,7 +14,6 @@ namespace AspNetCoreRestApi.Controllers
     [ApiController]
     public class ProductReportsController : ControllerBase
     {
-
         private readonly ProductReportRepository _repository;
         private readonly ProductRepository _productRepository;
         private readonly ILogger<ProductsController> _logger;
@@ -71,7 +70,6 @@ namespace AspNetCoreRestApi.Controllers
                 {
                     return NotFound();
                 }
-
                 var fileName = "products.pdf";
                 _logger.LogInformation($"Export all products to PDF: {fileName}.");
                 return Ok(fileName);
@@ -91,19 +89,16 @@ namespace AspNetCoreRestApi.Controllers
             {
                 var products = _productRepository.GetAllDataAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
-                
                 if (products.Count == 0)
                 {
                     return NotFound();
                 }
-
                 // Create a new Excel package
                 using (var excelPackage = new ExcelPackage())
                 {
                     var fileName = "products.xlsx";
                     // Add a new worksheet
                     var worksheet = excelPackage.Workbook.Worksheets.Add("Products");
-
                     // Set column headers
                     worksheet.Cells[1, 1].Value = "Name";
                     worksheet.Cells[1, 2].Value = "Code";
@@ -112,7 +107,6 @@ namespace AspNetCoreRestApi.Controllers
                     worksheet.Cells[1, 5].Value = "Description";
                     worksheet.Cells[1, 6].Value = "Created";
                     worksheet.Cells[1, 7].Value = "Updated";
-
                     // Populate data rows
                     int row = 2;
                     foreach (var product in products)
@@ -129,7 +123,6 @@ namespace AspNetCoreRestApi.Controllers
                     }
                     // Auto fit columns
                     worksheet.Cells.AutoFitColumns();
-
                     var fileBytes = excelPackage.GetAsByteArray();
                     _logger.LogInformation($"Export all products to xlsx: {fileName}.");
                     return File(fileBytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);

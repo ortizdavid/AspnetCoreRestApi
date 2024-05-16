@@ -172,21 +172,21 @@ namespace AspNetCoreRestApi.Controllers
                             return BadRequest("Invalid CSV format. Each line must contain SupplierName,IdentificationNumber,Email,PrimaryPhone,SecondaryPhone,Address.");
                         }
                         //verify if exists
-                        if (await _repository.ExistsAsync(identification))
+                        if (await _repository.ExistsRecord("identification_number", identification))
                         {
-                            return BadRequest($"Supplier identification '{identification}' already exist");
+                            return BadRequest($"Supplier Identification Number '{identification}' already exists.");
                         }
                         if (await _repository.ExistsRecord("email", email))
                         {
-                            return BadRequest($"Supplier Email '{email}' already exist");
+                            return BadRequest($"Supplier Email '{email}' already exists.");
                         }
                         if (await _repository.ExistsRecord("primary_phone", primaryPhone))
                         {
-                            return BadRequest($"Supplier Primary Phone '{primaryPhone}' already exist");
+                            return BadRequest($"Supplier Primary Phone '{primaryPhone}' already exists.");
                         }
                         if (await _repository.ExistsRecord("secondary_phone", secondaryPhone))
                         {
-                            return BadRequest($"Supplier Secondary Phone '{secondaryPhone}' already exist");
+                            return BadRequest($"Supplier Secondary Phone '{secondaryPhone}' already exists.");
                         }
                         var supplier = new Supplier
                         {

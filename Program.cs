@@ -9,6 +9,8 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        var configuration = builder.Configuration;
+
         // Add services to the container.
         // Connection String / DbContext
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -22,7 +24,7 @@ internal class Program
         //Add repositories 
         builder.Services.AddRepositories();
         // Add JWT authentication
-        builder.Services.AddJwtAuthentication();
+        builder.Services.AddJwtAuthentication(configuration);
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using Microsoft.AspNetCore.Http.Metadata;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -21,6 +22,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _repository.GetAllAsync();
