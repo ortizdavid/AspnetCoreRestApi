@@ -7,9 +7,9 @@
 ## Features
 - [x] CRUD Operations
 - [x] Upload Image
-- [ ] Import CSV
+- [x] Import CSV
 - [x] Export PDF, XLSX and CSV
-- [ ] Authentication
+- [x] Authentication
 
 ## Tools
 - C#

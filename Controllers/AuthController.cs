@@ -4,6 +4,7 @@ using System.Text;
 using AspNetCoreRestApi.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -20,7 +21,7 @@ namespace AspNetCoreRestApi.Controllers
             _configuration = configuration;
         }
 
-
+        
         [HttpPost("login")]
         public IActionResult Login([FromBody] LoginRequest model)
         {
@@ -29,7 +30,7 @@ namespace AspNetCoreRestApi.Controllers
                 return Unauthorized();
             }
             var token = GenerateJwtToken(model.Username);
-            return Ok(new { token });
+            return Ok(new {token} );
         }
 
 
