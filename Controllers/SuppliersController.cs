@@ -12,7 +12,8 @@ namespace AspNetCoreRestApi.Controllers
         private readonly ILogger<SuppliersController> _logger;
         private readonly IConfiguration _configuration;
 
-        public SuppliersController(IConfiguration configuration, ILogger<SuppliersController> logger, SupplierRepository repository, ProductRepository productRepository)
+        public SuppliersController(IConfiguration configuration, ILogger<SuppliersController> logger, 
+            SupplierRepository repository, ProductRepository productRepository)
         {
             _repository = repository;
             _productRepository = productRepository;

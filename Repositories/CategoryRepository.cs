@@ -87,7 +87,7 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task<bool> ExistsAsync(string? predicate)
         {
-            if (predicate == null)
+            if (string.IsNullOrEmpty(predicate))
             {
                 return false;
             } 

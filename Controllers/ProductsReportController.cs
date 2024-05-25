@@ -18,7 +18,8 @@ namespace AspNetCoreRestApi.Controllers
         private readonly ProductRepository _productRepository;
         private readonly ILogger<ProductsController> _logger;
 
-        public ProductReportsController(ProductReportRepository repository, ProductRepository productRepository, ILogger<ProductsController> logger)
+        public ProductReportsController(ProductReportRepository repository, 
+            ProductRepository productRepository, ILogger<ProductsController> logger)
         {
             _repository = repository;
             _productRepository = productRepository;

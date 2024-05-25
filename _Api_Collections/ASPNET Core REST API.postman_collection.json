@@ -1,0 +1,1060 @@
+{
+	"info": {
+		"_postman_id": "6d9fd5d0-541d-4640-b083-9f2458e2094f",
+		"name": "ASPNET Core REST API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13144775"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"\",\r\n    \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/auth/login",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/auth/logout",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories/2",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CategoryName\": \"Teste Kelson\",\r\n    \"Description\": \"Tetse\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Categories CSV",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/ortiz/Downloads/Uploads dotnet Products/categories_for_import.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories/import-csv",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories",
+								"import-csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"CategoryName\": \"Computers\",\r\n    \"Description\": \"Related to PCs\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories/2",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/categories/1",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"categories",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get All products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Products XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"Mouse\",\r\n    \"code\": \"P092\",\r\n    \"unitPrice\": 19.99,\r\n    \"description\": \"\",\r\n    \"categoryId\": 1,\r\n    \"supplierId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Product Images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"postman-cloud:///1ef062ef-b201-4220-9eca-0123be7cd171",
+										"/C:/Users/ortiz/OneDrive/Imagens/Capturas de Ecrã/Screenshot 2024-03-25 151252.png",
+										"/C:/Users/ortiz/OneDrive/Imagens/Capturas de Ecrã/Screenshot 2024-03-25 134406.png",
+										"/C:/Users/ortiz/OneDrive/Imagens/Capturas de Ecrã/Screenshot 2024-03-25 134655.png"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/3/images",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"3",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Produts Csv",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/import-csv",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"import-csv"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product Images",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/3/images",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"3",
+								"images"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product XML",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/3/xml",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"3",
+								"xml"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/3",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productName\": \"Iphone xr\",\r\n    \"code\": \"P04\",\r\n    \"unitPrice\": 932.9,\r\n    \"description\": \"Iphone XR 64GB\",\r\n    \"categoryId\": 1\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products/3",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/products",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Suppliers",
+			"item": [
+				{
+					"name": "Get All Supplier Products",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/suppliers/1/products",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"suppliers",
+								"1",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Suppliers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/suppliers",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"suppliers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Supplier",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/suppliers/1",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"suppliers",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Import Suppliers CSV",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{PRODUCTS_JWT_TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/suppliers/import-csv",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"suppliers",
+								"import-csv"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reports",
+			"item": [
+				{
+					"name": "Products",
+					"item": [
+						{
+							"name": "Export Products PDF",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-pdf",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-pdf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Export Products Excel",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-excel",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-excel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Export Products CSV",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-csv",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-csv"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Suppliers",
+					"item": [
+						{
+							"name": "Export Suppliers PDF",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-pdf",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-pdf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Export Suppliers Excel",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-excel",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-excel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Export Suppliers CSV",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{PRODUCTS_JWT_TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{PRODUCTS_API_ROOT}}/productreports/export-csv",
+									"host": [
+										"{{PRODUCTS_API_ROOT}}"
+									],
+									"path": [
+										"productreports",
+										"export-csv"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users/1",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users/admin01",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users",
+								"admin01"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"admin01\",\r\n    \"password\": \"12345678\",\r\n    \"image\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\": \"admin01\",\r\n    \"password\": \"12345678\",\r\n    \"image\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Activate User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users/1/activate",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deactivate User",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users/1/deactivate",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users",
+								"1",
+								"deactivate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{PRODUCTS_API_ROOT}}/users/1",
+							"host": [
+								"{{PRODUCTS_API_ROOT}}"
+							],
+							"path": [
+								"users",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

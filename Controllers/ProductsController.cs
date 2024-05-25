@@ -21,7 +21,8 @@ namespace AspNetCoreRestApi.Controllers
         private readonly ILogger<ProductsController> _logger;
         private readonly FileUploader _imageUploader;
 
-        public ProductsController(IConfiguration configuration, ProductRepository repository, ImageRepository imageRepository, ILogger<ProductsController> logger)
+        public ProductsController(IConfiguration configuration, ProductRepository repository, 
+            ImageRepository imageRepository, ILogger<ProductsController> logger)
         {
             _configuration = configuration;
             _repository = repository;
@@ -236,7 +237,7 @@ namespace AspNetCoreRestApi.Controllers
                         //verify if exists
                         if (await _repository.ExistsAsync(productCode))
                         {
-                            return BadRequest($"Product code '{productCode}' already exist");
+                            return BadRequest($"Product code '{productCode}' already exists");
                         }
                         var product = new Product
                         {

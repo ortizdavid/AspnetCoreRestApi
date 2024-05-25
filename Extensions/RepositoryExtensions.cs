@@ -12,6 +12,7 @@ namespace AspNetCoreRestApi.Extensions
             services.AddScoped<ImageRepository>();
             services.AddScoped<ProductReportRepository>();
             services.AddScoped<SupplierRepository>();
+            services.AddScoped<UserRepository>();
         }
     }
 }

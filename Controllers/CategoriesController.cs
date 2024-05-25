@@ -28,7 +28,7 @@ namespace AspNetCoreRestApi.Controllers
             var categories = await _repository.GetAllAsync();
             if (!categories.Any())
             {
-                return NotFound();
+                return NotFound("Categories not found.");
             }
             return Ok(categories);
         }
@@ -40,7 +40,7 @@ namespace AspNetCoreRestApi.Controllers
             var category = await _repository.GetByIdAsync(id);
             if (category == null)
             {
-                return NotFound();
+                return NotFound("Category not found.");
             }
             return Ok(category);
         }
@@ -51,7 +51,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             if (category == null)
             {
-                return BadRequest();
+                return BadRequest("Category fields are invalid.");
             }
             try
             {
@@ -60,7 +60,7 @@ namespace AspNetCoreRestApi.Controllers
                     return BadRequest($"Category '{category.CategoryName}' already exists.");
                 }
                 await _repository.CreateAsync(category);
-                _logger.LogInformation($"Category '{category.CategoryName}' created.");
+                _logger.LogInformation($"Category '{category.CategoryName}' was created.");
                 return StatusCode(201, category);
             }
             catch (Exception ex)
@@ -90,7 +90,7 @@ namespace AspNetCoreRestApi.Controllers
                 category.Description = updatedCategory.Description;
                 category.UpdatedAt = DateTime.Now;
                 await _repository.UpdateAsync(category);
-                _logger.LogInformation($"Category '{updatedCategory.CategoryName}' updated.");
+                _logger.LogInformation($"Category '{updatedCategory.CategoryName}' was updated.");
                 return Ok(category);
             }
             catch (Exception ex)

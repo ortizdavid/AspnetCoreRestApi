@@ -3,6 +3,20 @@ CREATE DATABASE db_dotnet_product;
 \c db_dotnet_product;
 
 
+DROP TABLE IF EXISTS users;
+CREATE TABLE users (
+    user_id SERIAL PRIMARY KEY,
+    user_name VARCHAR(150) UNIQUE,
+    password VARCHAR(250),
+    image VARCHAR(100),
+    is_active BOOLEAN,
+    token VARCHAR(200) UNIQUE,
+    unique_id UUID DEFAULT gen_random_uuid(),
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
