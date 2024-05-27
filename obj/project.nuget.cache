@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "z1ltnx9jFHacmmQtkO/RgBlE90M+ZtOFIMxM0I8KepxBGwE5V1OtRYwd6VPOLdvbz1E0obaTlB/clj3mzf0jmw==",
+  "dgSpecHash": "JjQicmFbjFCFSUDDJeMmKlHEOdcOgCEn7J9217m4QZ67XHMjxhimJ9Rw81K5y51zadJx55/rmK8BCmg3wJtLOA==",
   "success": true,
   "projectFilePath": "C:\\Users\\ortiz\\projectos\\projectos-dotnet\\AspNetCoreRestApi\\AspNetCoreRestApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ortiz\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ortiz\\.nuget\\packages\\bouncycastle\\1.8.9\\bouncycastle.1.8.9.nupkg.sha512",
     "C:\\Users\\ortiz\\.nuget\\packages\\csvhelper\\32.0.1\\csvhelper.32.0.1.nupkg.sha512",
     "C:\\Users\\ortiz\\.nuget\\packages\\dinktopdf\\1.0.8\\dinktopdf.1.0.8.nupkg.sha512",

@@ -1,7 +1,9 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AspNetCoreRestApi.Helpers;
 using AspNetCoreRestApi.Models;
+using AspNetCoreRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Annotations;
@@ -12,24 +14,26 @@ namespace AspNetCoreRestApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly UserRepository _userRepository;
         private readonly ILogger<AuthController> _logger;
         private readonly IConfiguration _configuration;
 
-        public AuthController(ILogger<AuthController> logger, IConfiguration configuration)
+        public AuthController(UserRepository userRepository, ILogger<AuthController> logger, IConfiguration configuration)
         {
+            _userRepository = userRepository;
             _logger = logger;
             _configuration = configuration;
         }
 
         
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest model)
+        public IActionResult Login([FromBody] LoginRequest login)
         {
-            if (!IsValidUser(model.Username, model.Password))
+            if (!IsValidUser(login.Username, login.Password))
             {
-                return Unauthorized();
+                return Unauthorized("Username or Password incorrect!");
             }
-            var token = GenerateJwtToken(model.Username);
+            var token = GenerateJwtToken(login.Username);
             return Ok(new {token} );
         }
 
@@ -41,13 +45,22 @@ namespace AspNetCoreRestApi.Controllers
         }
 
 
-        private bool IsValidUser(string? username, string? password)
+        private bool IsValidUser(string? userName, string? password)
         {
-            return username == "example_user" && password == "example_password";
+            if (string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                return false;
+            }
+            var user = _userRepository.GetByUserName(userName);
+            if (user == null)
+            {
+                return false;
+            }
+            return PasswordHelper.Verify(password, user.Password);
         }
 
 
-        private string GenerateJwtToken(string? username)
+        private string GenerateJwtToken(string? userName)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -56,11 +69,12 @@ namespace AspNetCoreRestApi.Controllers
             var expiryMinutes = Convert.ToInt32(jwtSettings["ExpiryMinutes"]);
             var issuer = jwtSettings["Issuer"]; // Retrieve issuer from configuration
 
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, username)
+                    new Claim(ClaimTypes.Name, userName)
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(expiryMinutes),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),

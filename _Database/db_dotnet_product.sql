@@ -32,11 +32,11 @@ DROP TABLE IF EXISTS suppliers;
 CREATE TABLE suppliers (
     supplier_id SERIAL PRIMARY KEY,
     supplier_name VARCHAR(100) NOT NULL,
-    identification_number VARCHAR(30),
-    email VARCHAR(150) UNIQUE,
-    primary_phone VARCHAR(20) UNIQUE,
+    identification_number VARCHAR(30) UNIQUE,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    primary_phone VARCHAR(20) UNIQUE NOT NULL,
     secondary_phone VARCHAR(20) UNIQUE,
-    address VARCHAR(200),
+    address VARCHAR(150),
     unique_id UUID DEFAULT gen_random_uuid(),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
 	updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

@@ -4,6 +4,7 @@ using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.VisualBasic;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -51,7 +52,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             if (category == null)
             {
-                return BadRequest("Category fields are invalid.");
+                return BadRequest();
             }
             try
             {
@@ -124,7 +125,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPost("import-csv")]
-        public async Task<IActionResult> ImportCategorys(IFormFile file)
+        public async Task<IActionResult> ImportCategories(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {
@@ -146,6 +147,7 @@ namespace AspNetCoreRestApi.Controllers
                     {
                         var data = line.Split(',');
                         var categoryName = data[0];
+                        var description = data[1];
                         // verify number of fields
                         if (data.Length != 2)
                         {
@@ -158,7 +160,7 @@ namespace AspNetCoreRestApi.Controllers
                         var category = new Category
                         {
                             CategoryName = categoryName,
-                            Description =  data[1],
+                            Description =  description,
                         };
                         categories.Add(category);
                     }

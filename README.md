@@ -9,7 +9,7 @@
 - [x] Upload Image
 - [x] Import CSV
 - [x] Export PDF, XLSX and CSV
-- [x] Authentication
+- [x] Authentication (JWT)
 
 ## Tools
 - C#

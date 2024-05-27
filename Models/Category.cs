@@ -4,6 +4,8 @@ using AspNetCoreRestApi.Helpers;
 
 namespace AspNetCoreRestApi.Models
 {
+    /* category_name VARCHAR(50) UNIQUE,
+    description VARCHAR(150),*/
     [Table("categories")]
     public class Category
     {
@@ -11,11 +13,13 @@ namespace AspNetCoreRestApi.Models
         [Column("category_id")]
         public int CategoryId { get; set; }
         
-        [StringLength(50)]
+        [Required]
+        [StringLength(50, ErrorMessage = "name must be between {2} and {1}", MinimumLength = 3)]
         [Column("category_name")]        
         public string? CategoryName { get; set; }
    
-        [StringLength(100)]
+        [Required]
+        [StringLength(150, ErrorMessage = "description must be between {2} and {1}", MinimumLength = 10)]
         [Column("description")]
         public string? Description { get; set; }
         

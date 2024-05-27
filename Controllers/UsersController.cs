@@ -48,7 +48,7 @@ namespace AspNetCoreRestApi.Controllers
                 {
                     return Conflict($"User {user.UserName} already exists.");
                 }
-                user.Password = PasswordHelper.HashPassword(user.Password);
+                user.Password = PasswordHelper.Hash(user.Password);
                 await _repository.CreateAsync(user);
                 _logger.LogInformation($"User {user.UserName} was created");
                 return StatusCode(201, user);
@@ -101,7 +101,7 @@ namespace AspNetCoreRestApi.Controllers
                     return Conflict($"User '{updatedUser.UserName}' is already in use.");
                 }
                 //user.UserName = updatedUser.UserName;
-                user.Password = PasswordHelper.HashPassword(updatedUser.Password);
+                user.Password = PasswordHelper.Hash(updatedUser.Password);
                 user.Token = Encryption.GenerateRandomToken(_tokenLength);
                 user.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(user);

@@ -20,7 +20,7 @@ namespace AspNetCoreRestApi.Repositories
                 await _context.Categories.AddAsync(entity);
                 await _context.SaveChangesAsync();
             }
-            catch (System.Exception)
+            catch (Exception)
             {
                 throw;
             }
