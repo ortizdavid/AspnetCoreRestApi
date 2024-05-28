@@ -1,7 +1,5 @@
-
-using System.Buffers.Text;
+using System;
 using System.Security.Cryptography;
-using Microsoft.AspNetCore.DataProtection;
 
 namespace AspNetCoreRestApi.Helpers
 {
@@ -12,16 +10,14 @@ namespace AspNetCoreRestApi.Helpers
             return Guid.NewGuid();
         }
 
-        public static string? GenerateRandomToken(int length)
+        public static string GenerateRandomToken(int length)
         {
-            using (var rng = new RNGCryptoServiceProvider())
+            using (var rng = RandomNumberGenerator.Create())
             {
                 var tokenData = new byte[length];
                 rng.GetBytes(tokenData);
                 return Convert.ToBase64String(tokenData);
             }
         }
-
     }
-    
 }

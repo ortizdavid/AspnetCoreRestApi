@@ -46,11 +46,11 @@ namespace AspNetCoreRestApi.Controllers
             {
                 if (await _repository.ExistsAsync(user.UserName))
                 {
-                    return Conflict($"User {user.UserName} already exists.");
+                    return Conflict($"User '{user.UserName}' already exists.");
                 }
                 user.Password = PasswordHelper.Hash(user.Password);
                 await _repository.CreateAsync(user);
-                _logger.LogInformation($"User {user.UserName} was created");
+                _logger.LogInformation($"User '{user.UserName}' was created");
                 return StatusCode(201, user);
             }
             catch (Exception ex)
@@ -105,7 +105,7 @@ namespace AspNetCoreRestApi.Controllers
                 user.Token = Encryption.GenerateRandomToken(_tokenLength);
                 user.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(user);
-                _logger.LogInformation($"User {user.UserName} was created");
+                _logger.LogInformation($"User '{user.UserName}' was created");
                 return Ok(user);
             }
             catch (Exception ex)
@@ -127,7 +127,7 @@ namespace AspNetCoreRestApi.Controllers
             try
             {
                 await _repository.DeleteAsync(user);
-                _logger.LogInformation($"{user.UserName} was deleted");
+                _logger.LogInformation($"User '{user.UserName}' was deleted");
                 return NoContent();
             }
             catch (Exception ex)
@@ -156,8 +156,8 @@ namespace AspNetCoreRestApi.Controllers
                 user.Token = Encryption.GenerateRandomToken(_tokenLength);
                 user.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(user);
-                _logger.LogInformation($"User {user.UserName} was activated.");
-                return Ok($"User {user.UserName} activated.");
+                _logger.LogInformation($"User '{user.UserName}' was activated.");
+                return Ok($"User '{user.UserName}' activated.");
             }
             catch (Exception ex)
             {
@@ -184,8 +184,8 @@ namespace AspNetCoreRestApi.Controllers
                 user.IsActive = false;
                 user.UpdatedAt = DateTime.UtcNow;
                 await _repository.UpdateAsync(user);
-                _logger.LogInformation($"User {user.UserName} was deactivated");
-                return Ok($"User {user.UserName} activated.");
+                _logger.LogInformation($"User '{user.UserName}' was deactivated");
+                return Ok($"User '{user.UserName}' activated.");
             }
             catch (Exception ex)
             {

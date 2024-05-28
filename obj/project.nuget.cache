@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JjQicmFbjFCFSUDDJeMmKlHEOdcOgCEn7J9217m4QZ67XHMjxhimJ9Rw81K5y51zadJx55/rmK8BCmg3wJtLOA==",
+  "dgSpecHash": "GbLJb7ILowtzALruFzHHOFUQpOmUbEOx3T8wiXJBa+hs0fkglw2dpMTZjilCtZep2LH6yedAGHFw4AtqQM7eGA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\ortiz\\projectos\\projectos-dotnet\\AspNetCoreRestApi\\AspNetCoreRestApi.csproj",
+  "projectFilePath": "C:\\Users\\ortiz\\projectos\\projectos-dotnet\\AspnetCoreRestApi\\AspNetCoreRestApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ortiz\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\ortiz\\.nuget\\packages\\bouncycastle\\1.8.9\\bouncycastle.1.8.9.nupkg.sha512",
