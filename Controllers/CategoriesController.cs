@@ -22,8 +22,8 @@ namespace AspNetCoreRestApi.Controllers
         }
 
 
-        [HttpGet]
         [Authorize]
+        [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
             var categories = await _repository.GetAllAsync();
@@ -56,6 +56,10 @@ namespace AspNetCoreRestApi.Controllers
             }
             try
             {
+                if (string.IsNullOrEmpty(category.CategoryName) || string.IsNullOrEmpty(category.Description))
+                {
+                    return BadRequest("name and description cannot be null.");
+                }
                 if (await _repository.ExistsAsync(category.CategoryName))
                 {
                     return BadRequest($"Category '{category.CategoryName}' already exists.");

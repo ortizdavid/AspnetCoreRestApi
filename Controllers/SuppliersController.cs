@@ -140,7 +140,7 @@ namespace AspNetCoreRestApi.Controllers
 
 
         [HttpPost("import-csv")]
-        public async Task<IActionResult> ImportSuppiers(IFormFile file)
+        public async Task<IActionResult> ImportSuppiersCSV(IFormFile file)
         {
             if (file == null || file.Length == 0)
             {

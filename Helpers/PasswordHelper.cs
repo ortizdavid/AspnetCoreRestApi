@@ -1,7 +1,3 @@
-using System;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-
 namespace AspNetCoreRestApi.Helpers
 {
     public class PasswordHelper 
@@ -12,17 +8,13 @@ namespace AspNetCoreRestApi.Helpers
             if(string.IsNullOrEmpty(password)) {
                 throw new ArgumentNullException("Password must have a value");
             }
-            return password;
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
         // TODO
-        public static bool Verify(string? hashedPassword, string? providedPassword)
+        public static bool Verify(string? password, string? hashedPassword)
         {
-            if(!string.IsNullOrEmpty(hashedPassword) || !string.IsNullOrEmpty(providedPassword))
-            {
-                return false;
-            }
-            return true;
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }   
 
     }

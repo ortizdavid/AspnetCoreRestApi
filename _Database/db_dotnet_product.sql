@@ -20,7 +20,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS categories;
 CREATE TABLE categories (
     category_id SERIAL PRIMARY KEY,
-    category_name VARCHAR(50) UNIQUE,
+    category_name VARCHAR(50) UNIQUE NOT NULL,
     description VARCHAR(150),
     unique_id UUID DEFAULT gen_random_uuid(),
 	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
