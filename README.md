@@ -20,6 +20,8 @@ The project focuses on managing products, providing a comprehensive set of featu
 - [x] Export PDF, XLSX, and CSV
 - [x] Authentication (JWT)
 
+## Installation
+
 ### Prerequisites
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
