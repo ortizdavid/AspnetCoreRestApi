@@ -6,7 +6,6 @@ using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Swashbuckle.AspNetCore.Annotations;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -60,7 +59,7 @@ namespace AspNetCoreRestApi.Controllers
         }
 
 
-        private string GenerateJwtToken(string? userName)
+        private string GenerateJwtToken(string userName)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -85,7 +84,6 @@ namespace AspNetCoreRestApi.Controllers
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
-
 
     }
 }

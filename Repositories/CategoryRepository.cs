@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -101,6 +100,5 @@ namespace AspNetCoreRestApi.Repositories
             return await _context.Categories
                 .FirstOrDefaultAsync(c => c.CategoryName == name);
         }
-
     }
 }

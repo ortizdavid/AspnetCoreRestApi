@@ -1,5 +1,10 @@
 # Aspnet Core REST API
+Example of a complete REST API
 
+## Tools
+- C#
+- ASP .NET Core
+- PostgreSQL
 
 ## Problem
 - Product Management
@@ -11,6 +16,3 @@
 - [x] Export PDF, XLSX and CSV
 - [x] Authentication (JWT)
 
-## Tools
-- C#
-- PostgreSQL

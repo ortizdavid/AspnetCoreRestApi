@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Extensions;
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;

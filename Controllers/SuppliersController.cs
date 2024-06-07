@@ -21,7 +21,6 @@ namespace AspNetCoreRestApi.Controllers
             _configuration = configuration;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetAllSuppliers()
         {
@@ -32,7 +31,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(suppliers);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateSupplier([FromBody] Supplier supplier)
@@ -58,7 +56,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetSupplier(int id)
         {
@@ -69,7 +66,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(supplier);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateSupplier(int id, [FromBody] Supplier updatedSupplier)
@@ -103,7 +99,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSupplier(int id)
@@ -126,7 +121,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("{id}/products")]
         public async Task<IActionResult> GetSupplierProducts(int id)
         {
@@ -137,7 +131,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(products);
         }
-
 
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportSuppiersCSV(IFormFile file)
@@ -172,6 +165,7 @@ namespace AspNetCoreRestApi.Controllers
                         {
                             return BadRequest("Invalid CSV format. Each line must contain SupplierName,IdentificationNumber,Email,PrimaryPhone,SecondaryPhone,Address.");
                         }
+ 
                         //verify if exists
                         if (await _repository.ExistsRecord("identification_number", identification))
                         {
@@ -211,6 +205,5 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
     }
 }

@@ -1,13 +1,8 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Helpers;
-using CsvHelper;
-using System.Globalization;
-using CsvHelper.Configuration;
 using System.Xml.Serialization;
-
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -28,11 +23,8 @@ namespace AspNetCoreRestApi.Controllers
             _repository = repository;
             _imageRepository = imageRepository;
             _logger = logger;
-
-            var uploadsDirectory = _configuration["UploadsDirectory"];
-            _imageUploader = new FileUploader(uploadsDirectory, FileExtensions.Images, 5 * CapacityUnit.MEGA_BYTE);;
+            _imageUploader = new FileUploader(_configuration["UploadsDirectory"], FileExtensions.Images, 5 * CapacityUnit.MEGA_BYTE);;
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetAllProducts()
@@ -44,7 +36,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(products);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
@@ -70,7 +61,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct(int id)
         {
@@ -84,7 +74,6 @@ namespace AspNetCoreRestApi.Controllers
                 return Ok(product);
             }
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] Product updatedProduct)
@@ -118,7 +107,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
@@ -139,7 +127,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
 
         [HttpPost("{id}/images")]
         public async Task<IActionResult> AddProductImages(int id, List<IFormFile> files)
@@ -182,7 +169,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("{id}/images")]
         public async Task<IActionResult> GetProductImages(int id)
         {
@@ -199,7 +185,6 @@ namespace AspNetCoreRestApi.Controllers
                 return Ok(images);
             }
         }
-
 
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportProducts(IFormFile file)
@@ -261,7 +246,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("xml")]
         public async Task<IActionResult> GetAllProductsXml()
         {
@@ -292,6 +276,5 @@ namespace AspNetCoreRestApi.Controllers
             xmlSerializer.Serialize(xmlContent, product);
             return Content(xmlContent.ToString(), "application/xml");
         }
-
     }
 }

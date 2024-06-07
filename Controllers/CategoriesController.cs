@@ -1,10 +1,7 @@
-using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
-using Microsoft.AspNetCore.Http.Metadata;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.VisualBasic;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -21,8 +18,7 @@ namespace AspNetCoreRestApi.Controllers
             _logger = logger;
         }
 
-
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllCategories()
         {
@@ -34,7 +30,6 @@ namespace AspNetCoreRestApi.Controllers
             return Ok(categories);
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategory(int id)
         {
@@ -45,7 +40,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(category);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] Category category)
@@ -74,7 +68,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] Category updatedCategory)
@@ -105,7 +98,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategory(int id)
         {
@@ -126,7 +118,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
 
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportCategories(IFormFile file)
@@ -179,6 +170,5 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
     }
 }

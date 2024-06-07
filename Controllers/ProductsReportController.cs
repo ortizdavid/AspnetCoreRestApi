@@ -7,7 +7,6 @@ using AspNetCoreRestApi.Models;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
-
 namespace AspNetCoreRestApi.Controllers
 {
     [Route("api/[controller]")]
@@ -25,7 +24,6 @@ namespace AspNetCoreRestApi.Controllers
             _productRepository = productRepository;
             _logger = logger;
         }
-        
         
         [HttpGet("export-csv")]
         public IActionResult ExportProductsToCsv()
@@ -58,7 +56,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("export-pdf")]
         public IActionResult ExportProductsToPdf()
         {
@@ -81,7 +78,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, "An error occurred while exporting products to pdf");
             }
         }
-
         
         [HttpGet("export-excel")]
         public IActionResult ExportProductsToExcel()
@@ -135,6 +131,5 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, "An error occurred while exporting products to xlsx");
             }
         }
-    
     }
 }

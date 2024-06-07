@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -67,6 +66,5 @@ namespace AspNetCoreRestApi.Repositories
                     .ToListAsync();
             return images;
         }
-
     }
 }

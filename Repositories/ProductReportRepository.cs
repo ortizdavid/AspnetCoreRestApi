@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Models;
 
 namespace AspNetCoreRestApi.Repositories

@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -120,6 +119,5 @@ namespace AspNetCoreRestApi.Repositories
                 .Where(s => s.SupplierId == id)
                 .ToListAsync();
         }
-
     }
 }

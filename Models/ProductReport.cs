@@ -1,4 +1,3 @@
-
 namespace AspNetCoreRestApi.Models
 {
     public class ProductReport

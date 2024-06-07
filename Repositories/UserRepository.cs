@@ -1,4 +1,3 @@
-
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -84,7 +83,6 @@ namespace AspNetCoreRestApi.Repositories
                 .FirstOrDefaultAsync(u => u.UserName == userName);
         }
 
-
         public User? GetByUserName(string? userName)
         {
             return _context.Users.FirstOrDefault(u => u.UserName == userName);
@@ -108,6 +106,5 @@ namespace AspNetCoreRestApi.Repositories
                 throw;
             }
         }
-
     }
 }

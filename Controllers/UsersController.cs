@@ -1,4 +1,3 @@
-using System.Net;
 using AspNetCoreRestApi.Helpers;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Repositories;
@@ -22,7 +21,6 @@ namespace AspNetCoreRestApi.Controllers
             _configuration = configuration;
         }
 
-
         [HttpGet]
         public async Task<IActionResult> GetAllUsers()
         {
@@ -33,7 +31,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(users);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
@@ -60,7 +57,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
@@ -72,7 +68,6 @@ namespace AspNetCoreRestApi.Controllers
             return Ok(user);
         }
 
-
         [HttpGet("name/{userName}")]
         public async Task<IActionResult> GetUserByUsername(string userName)
         {
@@ -83,7 +78,6 @@ namespace AspNetCoreRestApi.Controllers
             }
             return Ok(user);
         }
-
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
@@ -115,7 +109,6 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
@@ -136,7 +129,6 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
 
         [HttpPut("{id}/activate")]
         public async Task<IActionResult> ActivateUser(int id)
@@ -166,8 +158,7 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
-
-         [HttpPut("{id}/deactivate")]
+        [HttpPut("{id}/deactivate")]
         public async Task<IActionResult> DeactivateUser(int id)
         {
             var user = await _repository.GetByIdAsync(id);
@@ -193,7 +184,5 @@ namespace AspNetCoreRestApi.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-
     }
 }

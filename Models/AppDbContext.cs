@@ -24,6 +24,5 @@ namespace AspNetCoreRestApi.Models
             modelBuilder.Entity<ProductData>().HasNoKey();
 
         }
-
     }
 }

@@ -108,7 +108,7 @@ namespace AspNetCoreRestApi.Repositories
             {
                 return false;
             }
-            var validFieldNames = new List<string> { "primary_phone", "secondary_phone", "email" };
+            var validFieldNames = new List<string> { "identification_number", "primary_phone", "secondary_phone", "email" };
             if (!validFieldNames.Contains(fieldName))
             {
                 throw new ArgumentException("Invalid field name");
