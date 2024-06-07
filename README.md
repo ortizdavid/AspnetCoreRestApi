@@ -32,36 +32,20 @@ The project focuses on managing products, providing a comprehensive set of featu
 
 1. **Set up the database:**
 
-    Open PostgreSQL and run the database script located in the [_Database](/_Database) folder.
+    Open PostgreSQL and run the database script located in the [`_Database`](/_Database) folder.
 
 2. **Configure the application:**
 
-    Update the database connection string in the `appsettings.json` file if necessary.
+    Update the database connection string in the [`appsettings.json`](appsettings.json).
 
-3. **Run the project:**
-
-    ```sh
-    dotnet run
-    ```
-
-4. **Import Postman collections:**
-
-    Import the Postman collections from the [_Api_Collections](/_Api_Collections) folder.
-
-5. **Test the endpoints:**
-
-    Use Postman to test the API endpoints.
-
-## Usage
-
-1. **Clone the repository:**
+3. **Clone the repository:**
 
     ```sh
     git clone https://github.com/your-username/aspnet-core-rest-api.git
     cd aspnet-core-rest-api
     ```
 
-2. **Install dependencies:**
+4. **Install dependencies:**
 
     Restore the .NET dependencies:
 
@@ -69,24 +53,16 @@ The project focuses on managing products, providing a comprehensive set of featu
     dotnet restore
     ```
 
-3. **Build the project:**
-
-    ```sh
-    dotnet build
-    ```
-
-4. **Run the project:**
+5. **Run the project:**
 
     ```sh
     dotnet run
     ```
 
-## API Documentation
+6. **Import Postman collections:**
 
-API documentation can be found in the Postman collections included in the [_Api_Collections](/_Api_Collections) folder. These collections provide detailed information on available endpoints, request/response formats, and example usage.
+    API documentation can be found in the Postman collections included in the [`_Api_Collections`](/_Api_Collections) folder. These collections provide detailed information on available endpoints, request/response formats, and example usage.
 
+7. **Test the endpoints:**
 
-## Contact
-
-For any questions or feedback, please contact [ortizaad1994@gmail.com].
-
+    Use Postman to test the API endpoints.
