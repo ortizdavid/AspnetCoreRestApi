@@ -20,8 +20,6 @@ The project focuses on managing products, providing a comprehensive set of featu
 - [x] Export PDF, XLSX, and CSV
 - [x] Authentication (JWT)
 
-## Installation
-
 ### Prerequisites
 
 - [.NET Core SDK](https://dotnet.microsoft.com/download)
@@ -41,8 +39,8 @@ The project focuses on managing products, providing a comprehensive set of featu
 3. **Clone the repository:**
 
     ```sh
-    git clone https://github.com/your-username/aspnet-core-rest-api.git
-    cd aspnet-core-rest-api
+    git clone https://github.com/ortizdavid/AspnetCoreRestApi.git
+    cd AspnetCoreRestApi
     ```
 
 4. **Install dependencies:**
