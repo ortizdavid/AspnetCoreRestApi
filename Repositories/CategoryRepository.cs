@@ -1,4 +1,6 @@
+using System.Data;
 using AspNetCoreRestApi.Models;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreRestApi.Repositories
@@ -6,10 +8,12 @@ namespace AspNetCoreRestApi.Repositories
     public class CategoryRepository : IRepository<Category>
     {
         private readonly AppDbContext _context;
+        private IDbConnection _dapper;
 
-        public CategoryRepository(AppDbContext context)
+        public CategoryRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(Category entity)
@@ -68,9 +72,18 @@ namespace AspNetCoreRestApi.Repositories
             }
         }
 
-        public async Task<List<Category>> GetAllAsync()
+        public async Task<List<Category>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM Categories;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<Category?> GetByIdAsync(int id)

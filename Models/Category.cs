@@ -4,8 +4,6 @@ using AspNetCoreRestApi.Helpers;
 
 namespace AspNetCoreRestApi.Models
 {
-    /* category_name VARCHAR(50) UNIQUE,
-    description VARCHAR(150),*/
     [Table("categories")]
     public class Category
     {

@@ -30,7 +30,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _productRepository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataReportAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 
                 if (products.Count == 0)
@@ -61,7 +61,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _productRepository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataReportAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 
                 if (products.Count == 0)
@@ -84,7 +84,7 @@ namespace AspNetCoreRestApi.Controllers
         {
             try
             {
-                var products = _productRepository.GetAllDataAsync().Result; 
+                var products = _productRepository.GetAllDataReportAsync().Result; 
                 var selectedFields = _repository.GetFieldsForReport(products);
                 if (products.Count == 0)
                 {

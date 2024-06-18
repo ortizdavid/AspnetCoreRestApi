@@ -1,4 +1,6 @@
+using System.Data;
 using AspNetCoreRestApi.Models;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreRestApi.Repositories
@@ -6,10 +8,12 @@ namespace AspNetCoreRestApi.Repositories
     public class ProductRepository : IRepository<Product>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public ProductRepository(AppDbContext context)
+        public ProductRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(Product entity)
@@ -74,9 +78,23 @@ namespace AspNetCoreRestApi.Repositories
             return await _context.Products.ToListAsync();
         }
 
-        public async Task<List<ProductData>> GetAllDataAsync()
+        public async Task<List<ProductData>> GetAllDataAsync(int limit, int offset)
+        {
+            return await _context.ProductData
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<List<ProductData>> GetAllDataReportAsync()
         {
             return await _context.ProductData.ToListAsync();
+        }
+
+        public async Task<int> CountDataAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM view_product_data;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<Product?> GetByIdAsync(int id)
@@ -113,11 +131,24 @@ namespace AspNetCoreRestApi.Repositories
             return product != null;
         }
 
-        public async Task<List<Product>> GetAllBySupplierAsync(int id)
+        public async Task<List<Product>> GetAllBySupplierAsync(int id, int limit, int offset)
         {
             return await _context.Products
-                .Where(s => s.SupplierId == id)
+                .Skip(offset)
+                .Take(limit)
                 .ToListAsync();
+        }
+
+        public async Task<int> CountBySupplierAsync(int id)
+        {
+            var sql = "SELECT COUNT(*) FROM Products WHERE SupplierId = @Id;";
+            return await _dapper.ExecuteScalarAsync<int>(sql, new { Id = id });
+        }
+
+
+        public Task<List<Product>> GetAllAsync(int limit, int offset)
+        {
+            throw new NotImplementedException();
         }
     }
 }

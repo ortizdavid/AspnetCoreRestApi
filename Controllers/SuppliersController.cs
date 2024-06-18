@@ -1,5 +1,6 @@
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Repositories;
+using BankCoreApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreRestApi.Controllers
@@ -10,26 +11,38 @@ namespace AspNetCoreRestApi.Controllers
         private readonly SupplierRepository _repository;
         private readonly ProductRepository _productRepository;
         private readonly ILogger<SuppliersController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
 
         public SuppliersController(IConfiguration configuration, ILogger<SuppliersController> logger, 
-            SupplierRepository repository, ProductRepository productRepository)
+            SupplierRepository repository, ProductRepository productRepository, IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _productRepository = productRepository;
             _logger = logger;
             _configuration = configuration;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSuppliers()
+        public async Task<IActionResult> GetAllSuppliers(int pageIndex = 1, int pageSize = 10)
         {
-            var suppliers = await _repository.GetAllAsync();
-            if (!suppliers.Any())
+            try
             {
-                return NotFound();
+                var count = await _repository.CountAsync();
+                if (count == 0)
+                {
+                    return NotFound("No suppliers found.");
+                }
+                var products = await _repository.GetAllAsync(pageSize, pageIndex);
+                var pagination = new Pagination<Supplier>(products, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(suppliers);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost]
@@ -122,14 +135,25 @@ namespace AspNetCoreRestApi.Controllers
         }
 
         [HttpGet("{id}/products")]
-        public async Task<IActionResult> GetSupplierProducts(int id)
+        public async Task<IActionResult> GetSupplierProducts(int id, int pageIndex = 1, int pageSize = 10)
         {
-            var products = await _productRepository.GetAllBySupplierAsync(id);
-            if (!products.Any())
+           
+            try
             {
-                return NotFound();
+                var count = await _productRepository.CountBySupplierAsync(id);
+                if (count == 0)
+                {
+                    return NotFound("No suppliers found.");
+                }
+                var products = await _productRepository.GetAllBySupplierAsync(id, pageSize, pageIndex);
+                var pagination = new Pagination<Product>(products, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(products);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost("import-csv")]

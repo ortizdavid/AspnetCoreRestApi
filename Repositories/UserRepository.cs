@@ -1,15 +1,19 @@
+using System.Data;
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
+using Dapper;
 
 namespace AspNetCoreRestApi.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository //: IRepository<User>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public UserRepository(AppDbContext context)
+        public UserRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(User entity)
@@ -67,9 +71,18 @@ namespace AspNetCoreRestApi.Repositories
             return user != null;
         }
 
-        public async Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM Users;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<User?> GetByIdAsync(int id)

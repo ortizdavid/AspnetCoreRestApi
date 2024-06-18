@@ -1,4 +1,6 @@
+using System.Data;
 using AspNetCoreRestApi.Models;
+using Dapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AspNetCoreRestApi.Repositories
@@ -6,10 +8,12 @@ namespace AspNetCoreRestApi.Repositories
     public class SupplierRepository : IRepository<Supplier>
     {
         private readonly AppDbContext _context;
+        private readonly IDbConnection _dapper;
 
-        public SupplierRepository(AppDbContext context)
+        public SupplierRepository(AppDbContext context, IDbConnection dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         public async Task CreateAsync(Supplier entity)
@@ -80,9 +84,18 @@ namespace AspNetCoreRestApi.Repositories
             return supplier != null;   
         }
 
-        public async Task<List<Supplier>> GetAllAsync()
+        public async Task<List<Supplier>> GetAllAsync(int limit, int offset)
         {
-            return await _context.Suppliers.ToListAsync();
+            return await _context.Suppliers
+                .Skip(offset)
+                .Take(limit)
+                .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            var sql = "SELECT COUNT(*) FROM Suppliers;";
+            return await _dapper.ExecuteScalarAsync<int>(sql);
         }
 
         public async Task<Supplier?> GetByIdAsync(int id)

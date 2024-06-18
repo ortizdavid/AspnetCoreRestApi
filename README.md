@@ -19,6 +19,7 @@ The project focuses on managing products, providing a comprehensive set of featu
 - [x] Import CSV
 - [x] Export PDF, XLSX, and CSV
 - [x] Authentication (JWT)
+- [x] Pagination
 
 ## Installation
 

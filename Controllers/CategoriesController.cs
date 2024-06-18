@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using Microsoft.AspNetCore.Authorization;
+using BankCoreApi.Helpers;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -11,23 +12,35 @@ namespace AspNetCoreRestApi.Controllers
     {
         private readonly CategoryRepository _repository;
         private readonly ILogger<CategoriesController> _logger;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         
-        public CategoriesController(CategoryRepository repository, ILogger<CategoriesController> logger)
+        public CategoriesController(CategoryRepository repository, ILogger<CategoriesController> logger,
+            IHttpContextAccessor httpContextAccessor)
         {
             _repository = repository;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
-        //[Authorize]
         [HttpGet]
-        public async Task<IActionResult> GetAllCategories()
+        public async Task<IActionResult> GetAllCategories(int pageIndex = 1, int pageSize = 10)
         {
-            var categories = await _repository.GetAllAsync();
-            if (!categories.Any())
+            try
             {
-                return NotFound("Categories not found.");
+                var count = await _repository.CountAsync();
+                if (count == 0)
+                {
+                    return NotFound("No categories found.");
+                }
+                var categories = await _repository.GetAllAsync(pageSize, pageIndex);
+                var pagination = new Pagination<Category>(categories, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(categories);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpGet("{id}")]

@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[32.0.1, )"
             },
+            "Dapper": {
+              "target": "Package",
+              "version": "[2.1.35, )"
+            },
             "DinkToPdf": {
               "target": "Package",
               "version": "[1.0.8, )"
@@ -99,6 +103,10 @@
             "Swashbuckle.AspNetCore.Annotations": {
               "target": "Package",
               "version": "[6.6.1, )"
+            },
+            "System.Data.SqlClient": {
+              "target": "Package",
+              "version": "[4.8.6, )"
             },
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",

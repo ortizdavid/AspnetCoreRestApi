@@ -3,6 +3,7 @@ using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Helpers;
 using System.Xml.Serialization;
+using BankCoreApi.Helpers;
 
 namespace AspNetCoreRestApi.Controllers
 {
@@ -15,26 +16,38 @@ namespace AspNetCoreRestApi.Controllers
         private readonly ImageRepository _imageRepository;
         private readonly ILogger<ProductsController> _logger;
         private readonly FileUploader _imageUploader;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public ProductsController(IConfiguration configuration, ProductRepository repository, 
-            ImageRepository imageRepository, ILogger<ProductsController> logger)
+            ImageRepository imageRepository, ILogger<ProductsController> logger, IHttpContextAccessor httpContextAccessor)
         {
             _configuration = configuration;
             _repository = repository;
             _imageRepository = imageRepository;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
             _imageUploader = new FileUploader(_configuration["UploadsDirectory"], FileExtensions.Images, 5 * CapacityUnit.MEGA_BYTE);;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllProducts()
+        public async Task<IActionResult> GetAllProducts(int pageIndex = 1, int pageSize = 10)
         {
-            var products = await _repository.GetAllDataAsync();
-            if (!products.Any())
+            try
             {
-                return NotFound();
+                var count = await _repository.CountDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No products found.");
+                }
+                var products = await _repository.GetAllDataAsync(pageSize, pageIndex);
+                var pagination = new Pagination<ProductData>(products, count, pageIndex, pageSize, _httpContextAccessor);
+                return Ok(pagination);
             }
-            return Ok(products);
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
         [HttpPost]
@@ -246,19 +259,33 @@ namespace AspNetCoreRestApi.Controllers
             }
         }
 
+
         [HttpGet("xml")]
-        public async Task<IActionResult> GetAllProductsXml()
+        public async Task<IActionResult> GetAllProductsXml(int pageIndex = 1, int pageSize = 0)
         {
-           
-            var products = await _repository.GetAllDataAsync();
-            if (products == null || !products.Any())
+            try
             {
-                return NotFound();
+                var count = await _repository.CountDataAsync();
+                if (count == 0)
+                {
+                    return NotFound("No products found.");
+                }
+                int offset = (pageIndex - 1) * pageSize;
+                var products = await _repository.GetAllDataAsync(pageSize, offset);
+                
+                var pagination = new Pagination<ProductData>(products, count, pageIndex, pageSize, _httpContextAccessor);
+
+                var xmlSerializer = new XmlSerializer(typeof(List<ProductData>));
+                var xmlContent = new StringWriter();
+                xmlSerializer.Serialize(xmlContent, products.ToList());
+
+                return Content(xmlContent.ToString(), "application/xml");
             }
-            var xmlSerializer = new XmlSerializer(typeof(List<ProductData>));
-            var xmlContent = new StringWriter();
-            xmlSerializer.Serialize(xmlContent, products);
-            return Content(xmlContent.ToString(), "application/xml");
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return StatusCode(500, ex.Message);
+            }
         }
 
 

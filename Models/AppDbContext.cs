@@ -22,7 +22,6 @@ namespace AspNetCoreRestApi.Models
             // ProductData -> view_product_data
             modelBuilder.Entity<ProductData>().ToView("view_product_data");
             modelBuilder.Entity<ProductData>().HasNoKey();
-
         }
     }
 }

@@ -1,7 +1,10 @@
+using System.Data;
+using System.Data.SqlClient;
 using AspNetCoreRestApi.Extensions;
 using AspNetCoreRestApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Npgsql;
 
 internal class Program
 {
@@ -16,6 +19,12 @@ internal class Program
         builder.Services.AddDbContext<AppDbContext>(
             options => options.UseNpgsql(connectionString)
         );
+        // Dapper
+        builder.Services.AddScoped<IDbConnection>(
+            sp => new NpgsqlConnection(builder.Configuration.GetConnectionString("DefaultConnection"))
+        );
+        // Add IHttpContextAccessor
+        builder.Services.AddHttpContextAccessor();
         // Controllers
         builder.Services.AddControllers();
         // Logging
@@ -24,7 +33,6 @@ internal class Program
         builder.Services.AddRepositories();
         // Add JWT authentication
         builder.Services.AddJwtAuthentication(configuration);
-
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         //builder.Services.AddSwaggerGen();

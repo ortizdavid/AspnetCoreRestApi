@@ -133,3 +133,10 @@ C:\Users\ortiz\projectos\projectos-dotnet\AspNetCoreRestApi\bin\Debug\net8.0\Mic
 C:\Users\ortiz\projectos\projectos-dotnet\AspNetCoreRestApi\bin\Debug\net8.0\Swashbuckle.AspNetCore.Annotations.dll
 C:\Users\ortiz\projectos\projectos-dotnet\AspNetCoreRestApi\bin\Debug\net8.0\_Api_Collections\ASPNET Core REST API.postman_collection.json
 C:\Users\ortiz\projectos\projectos-dotnet\AspNetCoreRestApi\bin\Debug\net8.0\BCrypt.Net-Next.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\Dapper.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\System.Data.SqlClient.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\runtimes\win-arm64\native\sni.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\runtimes\win-x64\native\sni.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\runtimes\win-x86\native\sni.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\ortiz\projectos\projectos-dotnet\AspnetCoreRestApi\bin\Debug\net8.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
