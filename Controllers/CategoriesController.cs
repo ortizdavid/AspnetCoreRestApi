@@ -47,7 +47,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetCategory(int id)
         {
             var category = await _repository.GetByIdAsync(id);
-            if (category == null)
+            if (category is null)
             {
                 return NotFound("Category not found.");
             }
@@ -57,7 +57,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCategory([FromBody] Category category)
         {
-            if (category == null)
+            if (category is null)
             {
                 return BadRequest();
             }
@@ -86,7 +86,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] Category updatedCategory)
         {
             var category = await _repository.GetByIdAsync(id);
-            if (category == null)
+            if (category is null)
             {
                 return NotFound();
             }
@@ -115,7 +115,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> DeleteCategory(int id)
         {
             var category = await _repository.GetByIdAsync(id);
-            if (category == null)
+            if (category is null)
             {
                 return NotFound();
             }
@@ -135,7 +135,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportCategories(IFormFile file)
         {
-            if (file == null || file.Length == 0)
+            if (file is null || file.Length == 0)
             {
                 return BadRequest("No file selected.");
             }

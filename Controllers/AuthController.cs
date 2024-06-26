@@ -51,7 +51,7 @@ namespace AspNetCoreRestApi.Controllers
                 return false;
             }
             var user = _userRepository.GetByUserName(userName);
-            if (user == null)
+            if (user is null)
             {
                 return false;
             }

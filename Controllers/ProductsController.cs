@@ -53,7 +53,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateProduct([FromBody] Product product)
         {
-            if (product == null)
+            if (product is null)
             {
                 return BadRequest();
             }
@@ -78,7 +78,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetProduct(int id)
         {
             var product = await _repository.GetDataByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }
@@ -92,7 +92,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> UpdateProduct(int id, [FromBody] Product updatedProduct)
         {
             var product = await _repository.GetByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }
@@ -124,7 +124,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _repository.GetByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }
@@ -145,11 +145,11 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> AddProductImages(int id, List<IFormFile> files)
         {
             var product = await _repository.GetByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }
-            if (files == null || files.Count == 0)
+            if (files is null || files.Count == 0)
             {
                 return BadRequest("No files selected.");
             }
@@ -186,7 +186,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetProductImages(int id)
         {
             var product = await _repository.GetByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }
@@ -202,7 +202,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportProducts(IFormFile file)
         {
-            if (file == null || file.Length == 0)
+            if (file is null || file.Length == 0)
             {
                 return BadRequest("No file selected.");
             }
@@ -294,7 +294,7 @@ namespace AspNetCoreRestApi.Controllers
         {
            
             var product = await _repository.GetByIdAsync(id);
-            if (product == null)
+            if (product is null)
             {
                 return NotFound();
             }

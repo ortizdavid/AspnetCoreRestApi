@@ -49,7 +49,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] User user)
         {
-            if (user == null)
+            if (user is null)
             {
                 return BadRequest();
             }
@@ -75,7 +75,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _repository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
             {
                 return NotFound("User not found.");
             }
@@ -86,7 +86,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetUserByUsername(string userName)
         {
             var user = await _repository.GetByUserNameAsync(userName);
-            if (user == null)
+            if (user is null)
             {
                 return NotFound("User not found.");
             }
@@ -97,7 +97,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> UpdateUser(int id, [FromBody] User updatedUser)
         {
             var user = await _repository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
             {
                 return BadRequest();
             }
@@ -127,7 +127,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _repository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
             {
                 return NotFound("User not found.");
             }
@@ -148,7 +148,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> ActivateUser(int id)
         {
             var user = await _repository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
             {
                 return BadRequest();
             }
@@ -176,7 +176,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> DeactivateUser(int id)
         {
             var user = await _repository.GetByIdAsync(id);
-            if (user == null)
+            if (user is null)
             {
                 return BadRequest();
             }

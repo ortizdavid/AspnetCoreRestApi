@@ -48,7 +48,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateSupplier([FromBody] Supplier supplier)
         {
-            if (supplier == null)
+            if (supplier is null)
             {
                 return BadRequest();
             }
@@ -73,7 +73,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> GetSupplier(int id)
         {
             var supplier = await _repository.GetByIdAsync(id);
-            if (supplier == null)
+            if (supplier is null)
             {
                 return NotFound();
             }
@@ -84,7 +84,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> UpdateSupplier(int id, [FromBody] Supplier updatedSupplier)
         {
             var supplier = await _repository.GetByIdAsync(id);
-            if (supplier == null)
+            if (supplier is null)
             {
                 return NotFound();
             }
@@ -117,7 +117,7 @@ namespace AspNetCoreRestApi.Controllers
         public async Task<IActionResult> DeleteSupplier(int id)
         {
             var supplier = await _repository.GetByIdAsync(id);
-            if (supplier == null)
+            if (supplier is null)
             {
                 return NotFound();
             }
@@ -159,7 +159,7 @@ namespace AspNetCoreRestApi.Controllers
         [HttpPost("import-csv")]
         public async Task<IActionResult> ImportSuppiersCSV(IFormFile file)
         {
-            if (file == null || file.Length == 0)
+            if (file is null || file.Length == 0)
             {
                 return BadRequest("No file selected.");
             }
