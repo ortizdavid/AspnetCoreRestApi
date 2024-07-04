@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using Microsoft.AspNetCore.Authorization;
-using BankCoreApi.Helpers;
+using AspNetCoreRestApi.Helpers;
 
 namespace AspNetCoreRestApi.Controllers
 {
