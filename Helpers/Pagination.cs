@@ -8,7 +8,7 @@ namespace AspNetCoreRestApi.Helpers
     public class Pagination<T>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
-        public IEnumerable<T>? Items { get; private set; }
+        public IEnumerable<T> Items { get; private set; }
         public PaginationMetadata Metadata { get; set; }
         
         public Pagination(IEnumerable<T> items, int count, int pageIndex, int pageSize, IHttpContextAccessor httpContextAccessor)
