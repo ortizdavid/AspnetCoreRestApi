@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AspNetCoreRestApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+87b68736704c3907152749a97cb7c6bcd3c2a52d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76153cd0b22166d25d4d4b98a301ddc60def226a")]
 [assembly: System.Reflection.AssemblyProductAttribute("AspNetCoreRestApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AspNetCoreRestApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

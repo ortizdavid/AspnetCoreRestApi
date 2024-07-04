@@ -117,15 +117,6 @@ namespace AspNetCoreRestApi.Repositories
 
         public async Task<bool> ExistsRecord(string fieldName, string value)
         {
-            if (string.IsNullOrEmpty(fieldName) || string.IsNullOrEmpty(value))
-            {
-                return false;
-            }
-            var validFieldNames = new List<string> { "identification_number", "primary_phone", "secondary_phone", "email" };
-            if (!validFieldNames.Contains(fieldName))
-            {
-                throw new ArgumentException("Invalid field name");
-            }
             var sql = $"SELECT 1 FROM Suppliers WHERE {fieldName} = @value LIMIT 1";
             var exists = await _context.Suppliers
                 .FromSqlRaw(sql, new Npgsql.NpgsqlParameter("@value", value))
