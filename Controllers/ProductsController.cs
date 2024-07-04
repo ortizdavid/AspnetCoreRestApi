@@ -3,7 +3,6 @@ using AspNetCoreRestApi.Repositories;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Helpers;
 using System.Xml.Serialization;
-using BankCoreApi.Helpers;
 
 namespace AspNetCoreRestApi.Controllers
 {

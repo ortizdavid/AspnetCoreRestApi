@@ -1,7 +1,6 @@
 using AspNetCoreRestApi.Helpers;
 using AspNetCoreRestApi.Models;
 using AspNetCoreRestApi.Repositories;
-using BankCoreApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspNetCoreRestApi.Controllers
